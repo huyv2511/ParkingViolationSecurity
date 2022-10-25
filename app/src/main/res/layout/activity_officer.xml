@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Officer.OfficerActivity">
+    <TextView
+        android:id="@+id/officerFrontPage_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="Officer Page"
+        />
+
+    <Button
+        android:id="@+id/btn_ticketManagement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ticket Management"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/officerFrontPage_tv"/>
+
+    <Button
+        android:id="@+id/btn_makeATicket"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Make A Ticket"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/btn_ticketManagement"/>
+
+    <Button
+        android:id="@+id/btn_CarLookUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Car Look Up"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/btn_makeATicket"/>
+</RelativeLayout>

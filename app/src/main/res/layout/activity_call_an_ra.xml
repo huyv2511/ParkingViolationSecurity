@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Student.CallAnRA">
+
+    <LinearLayout
+        android:layout_centerHorizontal="true"
+        android:id="@+id/linearLayout_1"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Your room number"
+            tools:layout_editor_absoluteX="95dp"
+            tools:layout_editor_absoluteY="43dp" />
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="enter your room number"
+            android:inputType="number"/>
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:id="@+id/linearLayout_2"
+        android:layout_below="@id/linearLayout_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Situation Type"
+            tools:layout_editor_absoluteX="93dp"
+            tools:layout_editor_absoluteY="89dp" />
+        <EditText
+            android:id="@+id/ticketDescription"
+            android:hint="Tell us more about your situation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+
+
+
+
+    <EditText
+        android:id="@+id/phoneNumberTicket_et"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_below="@id/linearLayout_2"
+        android:inputType="phone"
+        android:hint="Enter your phone number"
+        tools:layout_editor_absoluteX="90dp"
+        tools:layout_editor_absoluteY="137dp" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_below="@id/phoneNumberTicket_et"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        tools:layout_editor_absoluteX="97dp"
+        tools:layout_editor_absoluteY="221dp" />
+</RelativeLayout>

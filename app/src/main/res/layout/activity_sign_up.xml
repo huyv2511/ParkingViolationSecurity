@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SignUp">
+
+    <EditText
+        android:id="@+id/userName_et"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Enter your username:"
+        android:inputType="text"
+        tools:layout_editor_absoluteX="37dp"
+        tools:layout_editor_absoluteY="98dp"
+        android:layout_centerHorizontal="true"/>
+    <EditText
+        android:id="@+id/password_et"
+
+        android:layout_below="@id/userName_et"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Enter your password:"
+        android:inputType="textPassword"
+        tools:layout_editor_absoluteX="41dp"
+        tools:layout_editor_absoluteY="558dp"
+        android:layout_centerHorizontal="true"/>
+    <EditText
+        android:id="@+id/fullName_et"
+        android:inputType="textPersonName"
+        android:hint="Enter your full name:"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/password_et"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"/>
+
+    <EditText
+        android:id="@+id/phoneNumber_et"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fullName_et"
+        android:ems="10"
+        android:inputType="number"
+        android:hint="Enter your password"
+        android:text=""
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="349dp"
+        android:layout_centerHorizontal="true"/>
+
+    <EditText
+        android:id="@+id/fontbonneEmail_et"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Enter your email"
+        android:layout_below="@id/phoneNumber_et"
+        android:inputType="textEmailAddress"
+        tools:layout_editor_absoluteX="68dp"
+        tools:layout_editor_absoluteY="454dp"
+        android:layout_centerHorizontal="true"/>
+    <Button
+        android:id="@+id/createNewUser_btn"
+        android:layout_below="@id/fontbonneEmail_et"
+        android:layout_width="wrap_content"
+        android:text="Sign Up"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"/>
+
+
+</RelativeLayout>
