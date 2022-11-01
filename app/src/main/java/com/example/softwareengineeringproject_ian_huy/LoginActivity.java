@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.softwareengineeringproject_ian_huy.Officer.OfficerActivity;
+import com.example.softwareengineeringproject_ian_huy.Student.StudentPage;
 
 public class LoginActivity extends AppCompatActivity {
     EditText username_et, password_et;
@@ -30,11 +31,15 @@ public class LoginActivity extends AppCompatActivity {
                 String userName = username_et.getText().toString();
                 String password = password_et.getText().toString();
 
-                if(userName.compareTo("PParker1100") == 0 && password.compareTo("NoobSlayer69!")==0){
+                if(userName.compareTo("test") == 0 && password.compareTo("1!")==0){
                     //then moving on to officer activity
                     Intent i = new Intent(LoginActivity.this, OfficerActivity.class);
                     startActivity(i);
 
+                }
+                else if(userName.compareTo("HUY") == 0 && password.compareTo("HUY")==0){
+                    Intent i = new Intent(LoginActivity.this, StudentPage.class);
+                    startActivity(i);
                 }
                 else{
                     Toast.makeText(LoginActivity.this, "Incorrect password or username! Please try again", Toast.LENGTH_SHORT).show();

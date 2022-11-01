@@ -38,43 +38,44 @@ public class MakeATicket extends AppCompatActivity {
         captureBtn = findViewById(R.id.capturePicture_btn);
         imageView = findViewById(R.id.imageView_CarPic);
 
-        captureBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){//request runtime permission
-                    if(checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED
-                        || checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
-                        String[] permission = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-                        requestPermissions(permission,PERMISSION_CODE);
-                    }
-                }
-                else{
-                    //permission is granted
-                    callYourCamera();
-                }
-            }
-        });
-    }
-    private void callYourCamera(){
-        ContentValues cv = new ContentValues();
-        cv.put(MediaStore.Images.Media.TITLE,"New picture");
-        cv.put(MediaStore.Images.Media.DESCRIPTION, "From the Camera");
-        uri_image = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,cv);
-
-        //Camera intent
-        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT,uri_image);
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
                     public void onActivityResult(ActivityResult result) {
                         if(result.getResultCode() == IMAGE_CAPTURE_CODE){
-                            activityResultLauncher.launch(cameraIntent);
+                            Toast.makeText(MakeATicket.this, "GRanted", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
 
+
+        captureBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MakeATicket.this, "Clicked!", Toast.LENGTH_SHORT).show();
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){//request runtime permission
+                    if(checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED
+                        || checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
+                        //if the permission is denied
+                        String[] permission = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                        requestPermissions(permission,PERMISSION_CODE);
+                    }
+                    else{
+                        //permission is granted
+                        Toast.makeText(MakeATicket.this, "Permission is already granted!", Toast.LENGTH_SHORT).show();
+                        callYourCamera();
+                    }
+                }
+                else{
+                    //permission is granted
+                    Toast.makeText(MakeATicket.this, "Permission is already granted!", Toast.LENGTH_SHORT).show();
+                    callYourCamera();
+                }
+
+            }
+        });
     }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull  int[] grantResults) {
@@ -97,6 +98,18 @@ public class MakeATicket extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             imageView.setImageURI((uri_image));
         }
+
+    }
+    private void callYourCamera(){
+        ContentValues cv = new ContentValues();
+        cv.put(MediaStore.Images.Media.TITLE,"New picture");
+        cv.put(MediaStore.Images.Media.DESCRIPTION, "From the Camera");
+        uri_image = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,cv);
+
+        //Camera intent
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT,uri_image);
+        activityResultLauncher.launch(cameraIntent);
 
     }
 }
