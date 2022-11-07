@@ -16,27 +16,42 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.softwareengineeringproject_ian_huy.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.util.UUID;
 
 public class MakeATicket extends AppCompatActivity {
     ActivityResultLauncher<Intent> activityResultLauncher;
     private static final int PERMISSION_CODE = 1000;
     private static final int IMAGE_CAPTURE_CODE =  1001;
-    Button captureBtn;
+    Button captureBtn,uploadBtn;
     ImageView imageView;
-    Uri uri_image;
+    private Uri uri_image;
+    private FirebaseStorage storage;
+    private StorageReference storageRef;
+    //
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_make_aticket);
-
+        //declaring firebase objects
+        storage = FirebaseStorage.getInstance();
+        storageRef = storage.getReference();
+        //declaring views
         captureBtn = findViewById(R.id.capturePicture_btn);
         imageView = findViewById(R.id.imageView_CarPic);
+        uploadBtn = findViewById(R.id.uploadTicket_btn);
 
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
@@ -74,6 +89,32 @@ public class MakeATicket extends AppCompatActivity {
 
             }
         });
+        uploadBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                uploadImage();
+            }
+        });
+    }
+
+    private void uploadImage() {
+        if(uri_image!=null){
+            StorageReference ref = storageRef.child("images/"+ UUID.randomUUID().toString());
+            Log.e("Image",uri_image.toString());
+            ref.putFile(uri_image)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Toast.makeText(MakeATicket.this, "image uploaded", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(Exception e) {
+                            Toast.makeText(MakeATicket.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
     }
 
 

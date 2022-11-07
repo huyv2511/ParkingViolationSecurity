@@ -8,6 +8,7 @@ public class Student {
         this.fontbonneEmail = fontbonneEmail;
         this.PhoneNumber = phoneNumber;
         this.fullName = fullName;
+        this.type = "Student";
     }
 
     private String userId;
@@ -16,6 +17,7 @@ public class Student {
     private String fontbonneEmail;
     private String PhoneNumber;
     private String fullName;
+    private String type;
 
 
     public String getUserId() {

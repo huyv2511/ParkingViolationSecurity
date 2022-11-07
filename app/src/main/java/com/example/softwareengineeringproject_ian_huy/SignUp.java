@@ -1,35 +1,50 @@
 package com.example.softwareengineeringproject_ian_huy;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.AsyncTask;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.softwareengineeringproject_ian_huy.JSONhelper.JSONParser;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.example.softwareengineeringproject_ian_huy.Object.Student;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SignUp extends AppCompatActivity {
     EditText userNameET, userPassword1_et, userPassword2_et, userEmail_et, userPhoneNumber_et,fullName_et;
     Button signUpBtn;
-    JSONParser jsonParser;
+
+    private FirebaseAuth mAuth;
+    FirebaseFirestore db;
+
     private String url = "https://10.102.162.136/phpServerFiles/index.php";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-        jsonParser = new JSONParser();
+
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         userNameET = findViewById(R.id.userName_et);
         userPassword1_et = findViewById(R.id.password_et);
@@ -53,12 +68,12 @@ public class SignUp extends AppCompatActivity {
         //email needs to be fontbonne email
         //phone number needs to be at least 9 to 10 characters
         //full name no check
-        String userName = userNameET.getText().toString();
-        String userPassword = userPassword1_et.getText().toString();
-        String userPassword1 = userPassword2_et.getText().toString();
-        String userEmail = userEmail_et.getText().toString();
-        String phoneNumber = userPhoneNumber_et.getText().toString();
-        String fullName = fullName_et.getText().toString();
+        String userName = userNameET.getText().toString().trim();
+        String userPassword = userPassword1_et.getText().toString().trim();
+        String userPassword1 = userPassword2_et.getText().toString().trim();
+        String userEmail = userEmail_et.getText().toString().trim();
+        String phoneNumber = userPhoneNumber_et.getText().toString().trim();
+        String fullName = fullName_et.getText().toString().trim();
 
         if(userName.isEmpty() || userPassword.isEmpty() || userPassword1.isEmpty() || userEmail.isEmpty() ||
         phoneNumber.isEmpty() || fullName.isEmpty()){
@@ -87,10 +102,55 @@ public class SignUp extends AppCompatActivity {
         }
         //if there is no error we proceed to push the users into the database
         if(errors.size() == 0 ){
-
-            AttemptLogin login = new AttemptLogin();
             Toast.makeText(this, "Posting new data", Toast.LENGTH_SHORT).show();
-            login.execute(userName,userPassword,fullName,phoneNumber,userEmail);
+            mAuth.createUserWithEmailAndPassword(userEmail,userPassword)
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull  Task<AuthResult> task) {
+                            if(task.isSuccessful()){
+                                Log.i("Firebase","Successfully registered!");
+                                UUID uuid = UUID.randomUUID();
+
+                                Student s = new Student(
+                                       uuid.toString(),userName,userPassword,userEmail,phoneNumber,fullName
+                                );
+//                                FirebaseDatabase.getInstance().getReference("Users")
+//                                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+//                                        .setValue(s).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                                    @Override
+//                                    public void onComplete(@NonNull Task<Void> task) {
+//
+//                                    }
+//                                });
+                                Map<String, String> map = new HashMap<>();
+                                map.put("userID", s.getUserId());
+                                map.put("userName",s.getUserName());
+                                map.put("userEmail",s.getFontbonneEmail());
+                                map.put("phoneNumber",s.getPhoneNumber());
+                                map.put("fullName",s.getFullName());
+                                map.put("userType","Student");
+                                db.collection("Users")
+                                        .add(map)
+                                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                            @Override
+                                            public void onSuccess(DocumentReference documentReference) {
+                                                Log.i("Firebase","Successfully adding users to database");
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.i("Firebase","Successfully adding users to database");
+                                    }
+                                });
+                            }
+                            else{
+                                Toast.makeText(SignUp.this, "Unsuccessfully register the users", Toast.LENGTH_SHORT).show();
+                                Log.i("Firebase","Something is wrong with registering!");
+                                Intent i = new Intent(SignUp.this,LoginActivity.class);
+                                startActivity(i);
+                            }
+                        }
+                    });
         }else{
             for(int i=0;i<errors.size();i++){
                 Toast.makeText(this, errors.get(i), Toast.LENGTH_SHORT).show();
@@ -101,42 +161,42 @@ public class SignUp extends AppCompatActivity {
     private void signUp(){
         Toast.makeText(this, "Valid sign up", Toast.LENGTH_SHORT).show();
     }
-    private class AttemptLogin extends AsyncTask<String, String, JSONObject> {
-        @Override
-        protected void onPreExecute(){
-            super.onPreExecute();
-        }
-
-        @Override
-        protected JSONObject doInBackground(String... args) {
-            String userName = args[0];
-            String password = args[1];
-            String fullName = args[2];
-            String phoneNumber = args[3];
-            String email = args[4];
-
-            ArrayList<NameValuePair> pair = new ArrayList<>();
-            pair.add(new BasicNameValuePair("userName",userName));
-            pair.add(new BasicNameValuePair("password",userName));
-            pair.add(new BasicNameValuePair("fullName",userName));
-            pair.add(new BasicNameValuePair("phoneNumber",userName));
-            pair.add(new BasicNameValuePair("fontbonneEmail",userName));
-
-            JSONObject json = new JSONParser().makeHttpRequest(url, "POST", pair);
-//            Toast.makeText(SignUp.this, "JSON something", Toast.LENGTH_SHORT).show();
-            return json;
-        }
-
-        protected void onPostExecute(JSONObject result){
-            try{
-                if(result!= null){
-                    Toast.makeText(getApplicationContext(),result.getString("message"),Toast.LENGTH_LONG).show();
-                }else{
-                    Toast.makeText(getApplicationContext(), "Unable to retrieve any data from server", Toast.LENGTH_LONG).show();
-                }
-            }catch(JSONException e ){
-                e.printStackTrace();
-            }
-        }
-    }
+//    private class AttemptLogin extends AsyncTask<String, String, JSONObject> {
+//        @Override
+//        protected void onPreExecute(){
+//            super.onPreExecute();
+//        }
+//
+//        @Override
+//        protected JSONObject doInBackground(String... args) {
+//            String userName = args[0];
+//            String password = args[1];
+//            String fullName = args[2];
+//            String phoneNumber = args[3];
+//            String email = args[4];
+//
+//            ArrayList<NameValuePair> pair = new ArrayList<>();
+//            pair.add(new BasicNameValuePair("userName",userName));
+//            pair.add(new BasicNameValuePair("password",userName));
+//            pair.add(new BasicNameValuePair("fullName",userName));
+//            pair.add(new BasicNameValuePair("phoneNumber",userName));
+//            pair.add(new BasicNameValuePair("fontbonneEmail",userName));
+//
+//            JSONObject json = new JSONParser().makeHttpRequest(url, "POST", pair);
+////            Toast.makeText(SignUp.this, "JSON something", Toast.LENGTH_SHORT).show();
+//            return json;
+//        }
+//
+//        protected void onPostExecute(JSONObject result){
+//            try{
+//                if(result!= null){
+//                    Toast.makeText(getApplicationContext(),result.getString("message"),Toast.LENGTH_LONG).show();
+//                }else{
+//                    Toast.makeText(getApplicationContext(), "Unable to retrieve any data from server", Toast.LENGTH_LONG).show();
+//                }
+//            }catch(JSONException e ){
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 }

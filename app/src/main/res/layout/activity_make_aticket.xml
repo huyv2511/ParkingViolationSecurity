@@ -6,6 +6,36 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".Officer.MakeATicket">
+    <EditText
+        android:id="@+id/et_carLicensePlate"
+        android:hint="Enter the car license plate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <EditText
+        android:id="@+id/et_carModel"
+        android:hint="Enter Car Model"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    </EditText>
+    <Spinner
+        android:id="@+id/spinner_carColor"
+        android:layout_width="wrap_content"
+        android:entries="@array/carColor"
+        android:layout_height="wrap_content">
+    </Spinner>
+    <Spinner
+        android:id="@+id/spinner_parkingViolationType"
+        android:layout_width="wrap_content"
+        android:entries="@array/ViolationType"
+        android:layout_height="wrap_content">
+
+    </Spinner>
+    <Spinner
+        android:id="@+id/spinner_carState"
+        android:entries="@array/States"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    </Spinner>
     <ImageView
         android:id="@+id/imageView_CarPic"
         android:scaleType="centerCrop"
@@ -17,5 +47,12 @@
         android:text="Capture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/uploadTicket_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Upload" />
+
 
 </LinearLayout>
