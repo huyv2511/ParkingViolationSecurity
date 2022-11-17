@@ -1,20 +1,23 @@
 package com.example.softwareengineeringproject_ian_huy.Object;
 
 public class Student {
-    public Student(String userId, String userName, String userPassword, String fontbonneEmail, String phoneNumber, String fullName) {
+    public Student(String userId, String userName, String userPassword, String userEmail, String phoneNumber, String fullName) {
         this.userId = userId;
         this.userName = userName;
         this.userPassword = userPassword;
-        this.fontbonneEmail = fontbonneEmail;
+        this.userEmail = userEmail;
         this.PhoneNumber = phoneNumber;
         this.fullName = fullName;
         this.type = "Student";
     }
 
+    public Student() {
+    }
+
     private String userId;
     private String userName;
     private String userPassword;
-    private String fontbonneEmail;
+    private String userEmail;
     private String PhoneNumber;
     private String fullName;
     private String type;
@@ -44,12 +47,12 @@ public class Student {
         this.userPassword = userPassword;
     }
 
-    public String getFontbonneEmail() {
-        return fontbonneEmail;
+    public String getuserEmail() {
+        return userEmail;
     }
 
-    public void setFontbonneEmail(String fontbonneEmail) {
-        this.fontbonneEmail = fontbonneEmail;
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
     public String getPhoneNumber() {

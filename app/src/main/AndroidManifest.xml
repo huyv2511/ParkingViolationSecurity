@@ -16,7 +16,7 @@
         <activity android:name=".Student.CallAnRA"></activity>
         <activity android:name=".Student.StudentPage" />
         <activity android:name=".SignUp" />
-        <activity android:name=".Officer.CarLookUp" />
+        <activity android:name=".Officer.CarLookUpActivity" />
         <activity android:name=".Officer.MakeATicket" />
         <activity android:name=".Officer.TicketManagement" />
         <activity android:name=".Officer.OfficerActivity" />

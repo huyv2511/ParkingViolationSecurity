@@ -19,27 +19,45 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.softwareengineeringproject_ian_huy.Object.Ticket;
 import com.example.softwareengineeringproject_ian_huy.R;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 import java.util.UUID;
 
 public class MakeATicket extends AppCompatActivity {
+    public static final String FIREBASE = "Firebase";
     ActivityResultLauncher<Intent> activityResultLauncher;
     private static final int PERMISSION_CODE = 1000;
     private static final int IMAGE_CAPTURE_CODE =  1001;
     Button captureBtn,uploadBtn;
     ImageView imageView;
+    EditText licensePlate_et, carModel_et;
+    Spinner carColor_sp,violationType_sp,carState_sp;
     private Uri uri_image;
     private FirebaseStorage storage;
     private StorageReference storageRef;
+    private StorageTask mTask;
+    private FirebaseFirestore db;
     //
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +66,16 @@ public class MakeATicket extends AppCompatActivity {
         //declaring firebase objects
         storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference();
+        db = FirebaseFirestore.getInstance();
         //declaring views
         captureBtn = findViewById(R.id.capturePicture_btn);
         imageView = findViewById(R.id.imageView_CarPic);
         uploadBtn = findViewById(R.id.uploadTicket_btn);
+        licensePlate_et = findViewById(R.id.et_carLicensePlate);
+        carModel_et = findViewById(R.id.et_carModel);
+        carColor_sp = findViewById(R.id.spinner_carColor);
+        violationType_sp = findViewById(R.id.spinner_parkingViolationType);
+        carState_sp = findViewById(R.id.spinner_carState);
 
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
@@ -99,21 +123,76 @@ public class MakeATicket extends AppCompatActivity {
 
     private void uploadImage() {
         if(uri_image!=null){
-            StorageReference ref = storageRef.child("images/"+ UUID.randomUUID().toString());
-            Log.e("Image",uri_image.toString());
-            ref.putFile(uri_image)
+            String randomID = UUID.randomUUID().toString();
+            String filePath = "images/" + randomID;
+            StorageReference ref = storageRef.child(filePath);
+            mTask = ref.putFile(uri_image)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Toast.makeText(MakeATicket.this, "image uploaded", Toast.LENGTH_SHORT).show();
+                           if(taskSnapshot.getMetadata()!= null) if(taskSnapshot.getMetadata().getReference()!=null) {
+                               Task<Uri> result = taskSnapshot.getStorage().getDownloadUrl();
+                               result.addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                   @Override
+                                   public void onSuccess(Uri uri) {
+                                       //store this string to tickets database
+                                       String imageUri = uri.toString();
+                                       String licensePlate = licensePlate_et.getText().toString();
+                                       String carModel = carModel_et.getText().toString();
+                                       String carColor = carColor_sp.getSelectedItem().toString();
+                                       String violationType = violationType_sp.getSelectedItem().toString();
+                                       String carState = carState_sp.getSelectedItem().toString();
+                                       SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault());
+                                       String currentDateandTime = sdf.format(new Date());
+                                       //initialize new ticket object
+                                       DocumentReference newDocRef = db.collection("tickets")
+                                                                            .document();
+                                       Ticket ticket = new Ticket(newDocRef.getId(),licensePlate,carModel,carState,carColor,violationType,currentDateandTime,imageUri);
+                                       newDocRef.set(ticket)
+                                               .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                   @Override
+                                                   public void onComplete( Task<Void> task) {
+                                                       if(task.isSuccessful()){
+                                                           Log.i(FIREBASE,"Successfully adding tickets to database");
+                                                       }
+                                                   }
+                                               }).addOnFailureListener(new OnFailureListener() {
+                                                       @Override
+                                                       public void onFailure( Exception e) {
+                                                           Log.e(FIREBASE,e.getMessage().toString());
+                                                       }
+                                       });
+
+                                   }
+                               });
+                           }
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
-                        public void onFailure(Exception e) {
+                        public void onFailure( Exception e) {
                             Toast.makeText(MakeATicket.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+
                         }
                     });
+//            Log.e("Image",uri_image.toString());
+//            ref.putFile(uri_image)
+//                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                        @Override
+//                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                            Toast.makeText(MakeATicket.this, "image uploaded", Toast.LENGTH_SHORT).show();
+
+//                        }
+//                    })
+//                    .addOnFailureListener(new OnFailureListener() {
+//                        @Override
+//                        public void onFailure(Exception e) {
+//                            Toast.makeText(MakeATicket.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+//                        }
+//                    });
+        }
+        else{
+            Toast.makeText(this, "No picture was uploaded", Toast.LENGTH_SHORT).show();
         }
     }
 

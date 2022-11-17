@@ -32,7 +32,7 @@ public class OfficerActivity extends AppCompatActivity {
         carLookUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(OfficerActivity.this, CarLookUp.class);
+                Intent i = new Intent(OfficerActivity.this, CarLookUpActivity.class);
                 startActivity(i);
             }
         });

@@ -19,9 +19,12 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -110,10 +113,25 @@ public class SignUp extends AppCompatActivity {
                             if(task.isSuccessful()){
                                 Log.i("Firebase","Successfully registered!");
                                 UUID uuid = UUID.randomUUID();
-
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                String userID = user.getUid();
                                 Student s = new Student(
-                                       uuid.toString(),userName,userPassword,userEmail,phoneNumber,fullName
+                                        userID,userName,userPassword,userEmail,phoneNumber,fullName
                                 );
+                                DocumentReference newStuRef = db.collection("Users").document();
+                                newStuRef.set(s)
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull @NotNull Task<Void> task) {
+                                                Log.i("Firebase","Successfully adding users to database");
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull @NotNull Exception e) {
+                                                Log.i("Firebase","Failed adding users to database");
+                                            }
+                                        });
 //                                FirebaseDatabase.getInstance().getReference("Users")
 //                                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
 //                                        .setValue(s).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -122,26 +140,26 @@ public class SignUp extends AppCompatActivity {
 //
 //                                    }
 //                                });
-                                Map<String, String> map = new HashMap<>();
-                                map.put("userID", s.getUserId());
-                                map.put("userName",s.getUserName());
-                                map.put("userEmail",s.getFontbonneEmail());
-                                map.put("phoneNumber",s.getPhoneNumber());
-                                map.put("fullName",s.getFullName());
-                                map.put("userType","Student");
-                                db.collection("Users")
-                                        .add(map)
-                                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                            @Override
-                                            public void onSuccess(DocumentReference documentReference) {
-                                                Log.i("Firebase","Successfully adding users to database");
-                                            }
-                                        }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.i("Firebase","Successfully adding users to database");
-                                    }
-                                });
+//                                Map<String, String> map = new HashMap<>();
+//                                map.put("userID", s.getUserId());
+//                                map.put("userName",s.getUserName());
+//                                map.put("userEmail",s.getFontbonneEmail());
+//                                map.put("phoneNumber",s.getPhoneNumber());
+//                                map.put("fullName",s.getFullName());
+//                                map.put("userType","Student");
+//                                db.collection("Users")
+//                                        .add(map)
+//                                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+//                                            @Override
+//                                            public void onSuccess(DocumentReference documentReference) {
+//                                                Log.i("Firebase","Successfully adding users to database");
+//                                            }
+//                                        }).addOnFailureListener(new OnFailureListener() {
+//                                    @Override
+//                                    public void onFailure(@NonNull Exception e) {
+//                                        Log.i("Firebase","Successfully adding users to database");
+//                                    }
+//                                });
                             }
                             else{
                                 Toast.makeText(SignUp.this, "Unsuccessfully register the users", Toast.LENGTH_SHORT).show();
@@ -161,42 +179,5 @@ public class SignUp extends AppCompatActivity {
     private void signUp(){
         Toast.makeText(this, "Valid sign up", Toast.LENGTH_SHORT).show();
     }
-//    private class AttemptLogin extends AsyncTask<String, String, JSONObject> {
-//        @Override
-//        protected void onPreExecute(){
-//            super.onPreExecute();
-//        }
-//
-//        @Override
-//        protected JSONObject doInBackground(String... args) {
-//            String userName = args[0];
-//            String password = args[1];
-//            String fullName = args[2];
-//            String phoneNumber = args[3];
-//            String email = args[4];
-//
-//            ArrayList<NameValuePair> pair = new ArrayList<>();
-//            pair.add(new BasicNameValuePair("userName",userName));
-//            pair.add(new BasicNameValuePair("password",userName));
-//            pair.add(new BasicNameValuePair("fullName",userName));
-//            pair.add(new BasicNameValuePair("phoneNumber",userName));
-//            pair.add(new BasicNameValuePair("fontbonneEmail",userName));
-//
-//            JSONObject json = new JSONParser().makeHttpRequest(url, "POST", pair);
-////            Toast.makeText(SignUp.this, "JSON something", Toast.LENGTH_SHORT).show();
-//            return json;
-//        }
-//
-//        protected void onPostExecute(JSONObject result){
-//            try{
-//                if(result!= null){
-//                    Toast.makeText(getApplicationContext(),result.getString("message"),Toast.LENGTH_LONG).show();
-//                }else{
-//                    Toast.makeText(getApplicationContext(), "Unable to retrieve any data from server", Toast.LENGTH_LONG).show();
-//                }
-//            }catch(JSONException e ){
-//                e.printStackTrace();
-//            }
-//        }
-//    }
+
 }

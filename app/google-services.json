@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "448203574313",
+    "project_id": "softwareengineeringproje-93d04",
+    "storage_bucket": "softwareengineeringproje-93d04.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:448203574313:android:5cb73c274367bf85f4a038",
+        "android_client_info": {
+          "package_name": "com.example.softwareengineeringproject_ian_huy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "448203574313-g7t5c0396f1s662hcjbb0s2k3gm7qjgn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7weDUmQ-O6gffdmC59zfg15rilA0_I1M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "448203574313-g7t5c0396f1s662hcjbb0s2k3gm7qjgn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
