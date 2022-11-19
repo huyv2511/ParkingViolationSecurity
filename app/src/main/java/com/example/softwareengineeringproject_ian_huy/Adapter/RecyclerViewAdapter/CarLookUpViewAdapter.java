@@ -1,4 +1,4 @@
-package com.example.softwareengineeringproject_ian_huy.Adapter;
+package com.example.softwareengineeringproject_ian_huy.Adapter.RecyclerViewAdapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,10 +16,14 @@ import com.google.firebase.firestore.DocumentSnapshot;
 
 import org.jetbrains.annotations.NotNull;
 
-public class CarLookUpViewAdapter extends FirestoreRecyclerAdapter<Car, CarLookUpViewAdapter.CarHolder > {
+import java.util.ArrayList;
+
+    public class CarLookUpViewAdapter extends FirestoreRecyclerAdapter<Car, CarLookUpViewAdapter.CarHolder > {
     private OnItemClickListener listener;
+    private ArrayList<Car> mList;
     public CarLookUpViewAdapter(@NonNull @NotNull FirestoreRecyclerOptions options) {
         super(options);
+        this.mList = new ArrayList<>(options.getSnapshots());
     }
 
     @Override
@@ -59,6 +63,10 @@ public class CarLookUpViewAdapter extends FirestoreRecyclerAdapter<Car, CarLookU
                 }
             });
         }
+    }
+
+    public void updateCarList(ArrayList<Car> newList){
+
     }
 
     public interface OnItemClickListener{

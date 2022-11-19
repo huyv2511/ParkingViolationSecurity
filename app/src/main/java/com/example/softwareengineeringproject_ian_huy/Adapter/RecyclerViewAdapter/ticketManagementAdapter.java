@@ -1,4 +1,4 @@
-package com.example.softwareengineeringproject_ian_huy.Adapter;
+package com.example.softwareengineeringproject_ian_huy.Adapter.RecyclerViewAdapter;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,14 +11,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.softwareengineeringproject_ian_huy.Adapter.IMainActivity;
 import com.example.softwareengineeringproject_ian_huy.Object.Ticket;
 import com.example.softwareengineeringproject_ian_huy.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FirebaseStorage;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import android.content.Context;
@@ -30,6 +29,7 @@ public class ticketManagementAdapter extends RecyclerView.Adapter<ticketManageme
     ArrayList<Ticket> ticketList;
     Context context;
     final  String TAG  = "ADAPTER";
+    private OnItemClickListener listener;
     public ticketManagementAdapter(ArrayList<Ticket> ticketList, Context context){
         this.ticketList = ticketList;
         this.context = context;
@@ -106,7 +106,7 @@ public class ticketManagementAdapter extends RecyclerView.Adapter<ticketManageme
             tv_TicketID = itemView.findViewById(R.id.row_ticketID);
             tv_ticketDate = itemView.findViewById(R.id.row_ticketDate);
             tv_licensePlate = itemView.findViewById(R.id.row_licensePlate);
-            viewMorebtn = itemView.findViewById(R.id.viewTicke_btn);
+            viewMorebtn = itemView.findViewById(R.id.viewTicket_btn);
 //            tv_carState = itemView.findViewById(R.id.row_carState);
 //            tv_carColor = itemView.findViewById(R.id.row_carColor);
 //            row_carPic = itemView.findViewById(R.id.imageView_carPic);
@@ -120,6 +120,16 @@ public class ticketManagementAdapter extends RecyclerView.Adapter<ticketManageme
 //                   iMainActivity = (IMainActivity) context;
                }
            });
+           itemView.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View view) {
+                   int pos = getAbsoluteAdapterPosition();
+                   if(pos!= RecyclerView.NO_POSITION){
+                       listener.onItemClick(getAdapterPosition());
+                   }
+
+               }
+           });
         }
 
         @Override
@@ -128,11 +138,11 @@ public class ticketManagementAdapter extends RecyclerView.Adapter<ticketManageme
 //            iMainActivity = (IMainActivity) context;
         }
     }
-    public void removeTicket(Ticket t){
-        ticketList.remove(t);
-        notifyDataSetChanged();
-    }
+
     public interface OnItemClickListener{
-        void onDeleteClick(int position);
+        void onItemClick(int position);
+    }
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.listener = listener;
     }
 }

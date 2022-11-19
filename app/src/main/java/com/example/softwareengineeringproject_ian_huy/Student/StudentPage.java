@@ -1,9 +1,8 @@
 package com.example.softwareengineeringproject_ian_huy.Student;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.softwareengineeringproject_ian_huy.Adapter.RegisterNewCarDialog;
+import com.example.softwareengineeringproject_ian_huy.Adapter.DialogAdapter.RegisterNewCarDialog;
 import com.example.softwareengineeringproject_ian_huy.Object.Car;
 import com.example.softwareengineeringproject_ian_huy.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -19,6 +18,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class StudentPage extends AppCompatActivity implements RegisterNewCarDialog.registerNewCarListener {
     Button callRA_btn, SOS_btn,carRes_btn;
@@ -32,14 +34,7 @@ public class StudentPage extends AppCompatActivity implements RegisterNewCarDial
         db = FirebaseFirestore.getInstance();
 
         callRA_btn = findViewById(R.id.callRA_btn);
-        SOS_btn = findViewById(R.id.SOS_btn);
 
-        SOS_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SOSCall();
-            }
-        });
 
         callRA_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +63,21 @@ public class StudentPage extends AppCompatActivity implements RegisterNewCarDial
 
     @Override
     public void newData(String newCarState, String newCarLicensePlate, String newCarModel, String newCarColor) {
+        //this handle new car data
+        ArrayList<String> errorList = new ArrayList<>();
+        if(newCarState == null){
+            errorList.add("Car State is inaccurate");
+        }
+        if(newCarLicensePlate.length() <6 && newCarLicensePlate.length() >8) errorList.add("Invalid License Plate");
+        if(newCarModel == null) errorList.add("Invalid Car Model");
+        if(newCarColor == null) errorList.add("Invalid Car Color");
+
+        if(errorList.size() > 0 ){
+            for (int i=0;i<errorList.size();i++){
+                Toast.makeText(this, errorList.get(i), Toast.LENGTH_SHORT).show();
+            }
+            return;
+        }
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String email = user.getEmail();
         DocumentReference docRef = db.collection("Cars")

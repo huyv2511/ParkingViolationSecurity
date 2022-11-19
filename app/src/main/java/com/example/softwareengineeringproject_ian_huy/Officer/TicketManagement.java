@@ -6,19 +6,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.speech.RecognizerResultsIntent;
 import android.util.Log;
-import android.view.View;
 
 import com.example.softwareengineeringproject_ian_huy.Adapter.IMainActivity;
-import com.example.softwareengineeringproject_ian_huy.Adapter.ViewTicketDialog;
-import com.example.softwareengineeringproject_ian_huy.Adapter.ticketManagementAdapter;
+import com.example.softwareengineeringproject_ian_huy.Adapter.DialogAdapter.ViewMoreTicketDialog;
+import com.example.softwareengineeringproject_ian_huy.Adapter.DialogAdapter.ViewTicketDialog;
+import com.example.softwareengineeringproject_ian_huy.Adapter.RecyclerViewAdapter.ticketManagementAdapter;
 import com.example.softwareengineeringproject_ian_huy.Object.Ticket;
 import com.example.softwareengineeringproject_ian_huy.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -29,10 +27,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
-public class TicketManagement extends AppCompatActivity implements ticketManagementAdapter.OnItemClickListener, IMainActivity {
+public class TicketManagement extends AppCompatActivity implements IMainActivity {
     private FirebaseStorage storage;
     private StorageReference storageRef;
     private StorageTask mTask;
@@ -65,6 +61,19 @@ public class TicketManagement extends AppCompatActivity implements ticketManagem
         }
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(adapter);
+        adapter.setOnItemClickListener(new ticketManagementAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                openDialog(position);
+            }
+        });
+    }
+    private void openDialog(int position) {
+        Ticket t = ticketList.get(position);
+        Log.e("TicketManagement",t.getTicketID());
+        ViewMoreTicketDialog dialog = new ViewMoreTicketDialog(t.getCarModel(),t.getcarState(),t.getCarModel()
+                                                                    ,t.getDate(),t.getImageUri(),t.getLicensePlate(),t.getviolationType());
+        dialog.show(getSupportFragmentManager(),"View Ticket Detail");
     }
     private void getNotes(){
 
@@ -90,11 +99,7 @@ public class TicketManagement extends AppCompatActivity implements ticketManagem
                 });
     }
 
-    @Override
-    public void onDeleteClick(int position) {
 
-
-    }
 
     @Override
     public void createNewTicket(String title, String content) {
@@ -111,4 +116,6 @@ public class TicketManagement extends AppCompatActivity implements ticketManagem
         ViewTicketDialog dialog = ViewTicketDialog.newInstance(t);
         dialog.show(getSupportFragmentManager(),"View Ticket Dialog");
     }
+
+
 }

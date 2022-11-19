@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -49,7 +50,8 @@ public class MakeATicket extends AppCompatActivity {
     ActivityResultLauncher<Intent> activityResultLauncher;
     private static final int PERMISSION_CODE = 1000;
     private static final int IMAGE_CAPTURE_CODE =  1001;
-    Button captureBtn,uploadBtn;
+    Button uploadBtn;
+    ImageButton captureBtn;
     ImageView imageView;
     EditText licensePlate_et, carModel_et;
     Spinner carColor_sp,violationType_sp,carState_sp;

@@ -2,23 +2,40 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:orientation="vertical"
+    android:padding="10dp"
     android:layout_height="wrap_content">
 <!--    private String carID;-->
 <!--    private String userID;-->
 <!--    private String carState;-->
 <!--    private String licensePlate;-->
 <!--    private String carModel;-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="Register New Car Info"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/purple_200"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
             android:text="Enter your car state: "
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-        <EditText
+        <Spinner
             android:id="@+id/dia_carState"
-            android:hint="                                                    "
+            android:entries="@array/States"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </LinearLayout>
@@ -29,12 +46,16 @@
         <TextView
             android:text="Enter your car license plate: "
             android:layout_width="wrap_content"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="15dp"
             android:layout_height="wrap_content"/>
+
         <EditText
             android:id="@+id/dia_licensePlate"
-            android:hint="                                                    "
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:hint="                                                    " />
     </LinearLayout>
     <LinearLayout
         android:orientation="horizontal"
@@ -43,6 +64,9 @@
         <TextView
             android:text="Enter your car model: "
             android:layout_width="wrap_content"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="15dp"
             android:layout_height="wrap_content"/>
         <EditText
             android:id="@+id/dia_carModel"
@@ -57,9 +81,13 @@
         <TextView
             android:text="Enter your car color: "
             android:layout_width="wrap_content"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="15dp"
             android:layout_height="wrap_content"/>
-        <EditText
+        <Spinner
             android:id="@+id/dia_carColor"
+            android:entries="@array/carColor"
             android:hint="                                                    "
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>

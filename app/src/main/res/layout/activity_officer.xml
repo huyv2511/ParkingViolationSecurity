@@ -5,13 +5,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Officer.OfficerActivity">
+    <ImageView
+        android:id="@+id/login_fontbonnelogo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_margin="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="30dp"
+        android:src="@drawable/fontbonne_logo"
+        app:srcCompat="@drawable/fontbonne_logo" />
     <TextView
+        android:layout_below="@id/login_fontbonnelogo"
         android:id="@+id/officerFrontPage_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="Officer Page"
-        />
+        android:textColor="@color/purple_200"
+        android:textSize="60dp"
+        android:text="Officer Page"/>
 
     <Button
         android:id="@+id/btn_ticketManagement"

@@ -1,4 +1,4 @@
-package com.example.softwareengineeringproject_ian_huy.Adapter;
+package com.example.softwareengineeringproject_ian_huy.Adapter.DialogAdapter;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.example.softwareengineeringproject_ian_huy.Adapter.IMainActivity;
 import com.example.softwareengineeringproject_ian_huy.Object.Ticket;
 import com.example.softwareengineeringproject_ian_huy.R;
 import com.squareup.picasso.Picasso;

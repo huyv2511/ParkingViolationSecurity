@@ -12,18 +12,15 @@
     android:text="Car Look Up"
     android:textSize="30dp"
     android:textStyle="bold"
+    android:textColor="@color/purple_200"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"/>
-    <SearchView
-        android:layout_below="@id/tv_carllookup_title"
-        android:id="@+id/searchBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
 
-    </SearchView>
+
+
    <androidx.recyclerview.widget.RecyclerView
-       android:layout_below="@id/searchBar"
+     android:layout_below="@id/tv_carllookup_title"
        android:id="@+id/carLookUp_recyclerView"
        android:layout_width="match_parent"
        android:layout_height="match_parent"

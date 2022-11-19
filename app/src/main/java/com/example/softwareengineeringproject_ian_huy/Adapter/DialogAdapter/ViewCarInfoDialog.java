@@ -1,4 +1,4 @@
-package com.example.softwareengineeringproject_ian_huy.Adapter;
+package com.example.softwareengineeringproject_ian_huy.Adapter.DialogAdapter;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
