@@ -3,16 +3,53 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:padding="10dp"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".SignUp">
+    <RelativeLayout
+        android:layout_centerHorizontal="true"
+        android:id="@+id/linearLayout_5"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/login_fontbonnelogo"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="30dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="30dp"
+            android:src="@drawable/fontbonne_logo"
+            app:srcCompat="@drawable/fontbonne_logo" />
+
+        <ImageView
+            android:id="@+id/login_fontbonnelogo1"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="30dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginLeft="60dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="30dp"
+
+            android:layout_marginBottom="30dp"
+            android:layout_toRightOf="@id/login_fontbonnelogo"
+            app:srcCompat="@drawable/athletics"
+            tools:srcCompat="@drawable/athletics" />
+    </RelativeLayout>
 
     <EditText
         android:id="@+id/userName_et"
         android:layout_width="wrap_content"
+        android:layout_margin="5dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Enter your username:"
+        android:background="@drawable/edit_text_border"
+        android:padding="10dp"
         android:inputType="text"
         tools:layout_editor_absoluteX="37dp"
         tools:layout_editor_absoluteY="98dp"
@@ -20,6 +57,9 @@
     <EditText
         android:id="@+id/password_et"
         android:layout_below="@id/userName_et"
+        android:layout_margin="5dp"
+        android:background="@drawable/edit_text_border"
+        android:padding="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -31,14 +71,21 @@
     <EditText
         android:id="@+id/password2_et"
         android:layout_width="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/edit_text_border"
+        android:padding="10dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Re:Enter your password"
+
         android:inputType="textPassword" />
     <EditText
         android:id="@+id/fullName_et"
         android:inputType="textPersonName"
         android:hint="Enter your full name:"
+        android:background="@drawable/edit_text_border"
+        android:padding="10dp"
+        android:layout_margin="5dp"
         android:layout_width="wrap_content"
         android:layout_below="@id/password_et"
         android:layout_height="wrap_content"
@@ -46,6 +93,9 @@
 
     <EditText
         android:id="@+id/phoneNumber_et"
+        android:background="@drawable/edit_text_border"
+        android:padding="10dp"
+        android:layout_margin="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/fullName_et"
@@ -59,6 +109,9 @@
 
     <EditText
         android:id="@+id/fontbonneEmail_et"
+        android:background="@drawable/edit_text_border"
+        android:padding="10dp"
+        android:layout_margin="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -73,6 +126,8 @@
         android:layout_below="@id/fontbonneEmail_et"
         android:layout_width="wrap_content"
         android:text="Sign Up"
+        android:padding="10dp"
+        android:layout_margin="5dp"
         android:layout_centerHorizontal="true"
         android:layout_height="wrap_content"/>
 

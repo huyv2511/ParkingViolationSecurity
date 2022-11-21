@@ -4,91 +4,128 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
+        android:padding="10dp"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="wrap_content"
+            android:layout_margin="5dp"
+            android:padding="10dp"
             android:layout_height="wrap_content">
             <TextView
                 android:text="License Plate: "
                 android:layout_width="wrap_content"
+                android:textColor="@color/black"
+                android:textStyle="bold"
                 android:layout_height="wrap_content"/>
             <TextView
                 android:text="ABC123"
                 android:id="@+id/ticketDialog_licensePlate"
                 android:layout_width="wrap_content"
+                android:textColor="@color/black"
+                android:textStyle="bold"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_margin="5dp"
+            android:padding="10dp"
             android:layout_height="wrap_content">
             <TextView
                 android:text="Car Color: "
                 android:layout_width="wrap_content"
+                android:textColor="@color/black"
+                android:textStyle="bold"
                 android:layout_height="wrap_content"/>
             <TextView
                 android:id="@+id/ticketDialog_carColor"
                 android:text="Red"
+                android:textColor="@color/black"
+                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
         <LinearLayout
+            android:layout_margin="5dp"
+            android:padding="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <TextView
                 android:text="Car State: "
+                android:textColor="@color/black"
+                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <TextView
                 android:id="@+id/ticketDialog_carState"
                 android:text="Missouri"
+                android:textColor="@color/black"
+                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
         <LinearLayout
+            android:layout_margin="5dp"
+            android:padding="10dp"
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <TextView
+                android:textColor="@color/black"
+                android:textStyle="bold"
                 android:text="Car Model: "
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <TextView
                 android:id="@+id/ticketDialog_carModel"
                 android:text="Toyota"
+                android:textColor="@color/black"
+                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
         <LinearLayout
-
+            android:layout_margin="5dp"
+            android:padding="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <TextView
                 android:text="Date: "
+                android:textColor="@color/black"
+                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <TextView
                 android:id="@+id/ticketDialog_Date"
                 android:text="25 11 2000"
+                android:textColor="@color/black"
+                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
         <LinearLayout
-
+            android:layout_margin="5dp"
+            android:padding="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <TextView
                 android:text="Date: "
+                android:textColor="@color/black"
+                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <TextView
                 android:id="@+id/ticketDialog_violationType"
                 android:text="Parked in wrong spot"
                 android:layout_width="wrap_content"
+                android:textColor="@color/black"
+                android:textStyle="bold"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
         <ImageView
+            android:layout_margin="5dp"
+            android:padding="10dp"
             android:id="@+id/ticketDialog_image"
             android:layout_width="200dp"
             android:layout_height="200dp"/>

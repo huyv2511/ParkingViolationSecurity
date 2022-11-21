@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:layout_margin="10dp"
+    android:padding="5dp"
+    android:background="@drawable/edit_text_border"
     android:layout_height="wrap_content">
     <RelativeLayout
         android:orientation="vertical"
@@ -14,12 +17,16 @@
             <TextView
                 android:text="License Plate"
                 android:layout_margin="10dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <TextView
                 android:text="ABC123"
                 android:id="@+id/tv_licensePlate_lookUp"
                 android:layout_margin="10dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
@@ -31,12 +38,16 @@
             <TextView
                 android:text="Car State"
                 android:layout_margin="10dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <TextView
                 android:id="@+id/tv_carState_lookUp"
                 android:text="ABC123"
                 android:layout_margin="10dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
@@ -48,12 +59,16 @@
             <TextView
                 android:text="Model "
                 android:layout_margin="10dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <TextView
                 android:id="@+id/tv_carModel_lookUp"
                 android:text="ABC123"
                 android:layout_margin="10dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
@@ -64,12 +79,16 @@
             android:layout_height="wrap_content">
             <TextView
                 android:text="Car Color"
+                android:textColor="@color/black"
+                android:textStyle="bold"
                 android:layout_margin="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <TextView
                 android:id="@+id/tv_carColor_lookUp"
                 android:text="ABC123"
+                android:textColor="@color/black"
+                android:textStyle="bold"
                 android:layout_margin="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>

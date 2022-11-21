@@ -7,10 +7,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.softwareengineeringproject_ian_huy.LoginActivity;
 import com.example.softwareengineeringproject_ian_huy.R;
 
 public class OfficerActivity extends AppCompatActivity {
-    Button makeATicket, ticketManagement, carLookUp;
+    Button makeATicket, ticketManagement, carLookUp, signOut_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +21,14 @@ public class OfficerActivity extends AppCompatActivity {
         ticketManagement = findViewById(R.id.btn_ticketManagement);
         carLookUp = findViewById(R.id.btn_CarLookUp);
         makeATicket = findViewById(R.id.btn_makeATicket);
+        signOut_btn = findViewById(R.id.signOut_btn);
+
+        signOut_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signOut();
+            }
+        });
 
         ticketManagement.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,5 +53,11 @@ public class OfficerActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+    }
+
+    private void signOut() {
+        Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(i);
+        finish();
     }
 }

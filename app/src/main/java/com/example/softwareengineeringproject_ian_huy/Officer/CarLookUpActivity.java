@@ -41,41 +41,16 @@ public class CarLookUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car_look_up);
-
         db = FirebaseFirestore.getInstance();
         collectionReference = db.collection("Cars");
-
         setUpRecyclerView();
-
     }
 
     private void openDialog(String name,  String phoneNum, String email) {
         ViewCarInfoDialog dialog = new ViewCarInfoDialog(name,phoneNum,email);
         dialog.show(getSupportFragmentManager(),"View Car Owner Info");
     }
-    public class WrapContentLinearLayoutManager extends LinearLayoutManager {
-        public WrapContentLinearLayoutManager(Context context) {
-            super(context);
-        }
 
-        public WrapContentLinearLayoutManager(Context context, int orientation, boolean reverseLayout) {
-            super(context, orientation, reverseLayout);
-        }
-
-        public WrapContentLinearLayoutManager(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-            super(context, attrs, defStyleAttr, defStyleRes);
-        }
-
-        //... constructor
-        @Override
-        public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
-            try {
-                super.onLayoutChildren(recycler, state);
-            } catch (IndexOutOfBoundsException e) {
-                Log.e("TAG", "meet a IOOBE in RecyclerView");
-            }
-        }
-    }
 
     private void setUpRecyclerView(){
         Query query = collectionReference.orderBy("licensePlate",Query.Direction.DESCENDING);

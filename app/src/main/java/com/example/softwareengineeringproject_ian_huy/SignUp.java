@@ -1,6 +1,7 @@
 package com.example.softwareengineeringproject_ian_huy;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -40,7 +41,7 @@ public class SignUp extends AppCompatActivity {
     private FirebaseAuth mAuth;
     FirebaseFirestore db;
 
-    private String url = "https://10.102.162.136/phpServerFiles/index.php";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,6 +89,7 @@ public class SignUp extends AppCompatActivity {
         Matcher m = r.matcher(userName);
         if(!m.find()){
             errors.add("Your username needs to be between 8-30 characters with letters and numbers");
+
         }
         //check password
         if(userPassword.compareTo(userPassword1) != 0 || userPassword.length() <8){
@@ -116,7 +118,7 @@ public class SignUp extends AppCompatActivity {
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 String userID = user.getUid();
                                 Student s = new Student(
-                                        userID,userName,userPassword,userEmail,phoneNumber,fullName
+                                        userID,userName,userEmail.toLowerCase(),phoneNumber,fullName
                                 );
                                 DocumentReference newStuRef = db.collection("Users").document();
                                 newStuRef.set(s)
@@ -124,6 +126,12 @@ public class SignUp extends AppCompatActivity {
                                             @Override
                                             public void onComplete(@NonNull @NotNull Task<Void> task) {
                                                 Log.i("Firebase","Successfully adding users to database");
+                                                Toast.makeText(SignUp.this, "You are registered", Toast.LENGTH_SHORT).show();
+                                                Intent i = new Intent (getApplicationContext(),LoginActivity.class);
+                                                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                startActivity(i);
+                                                finish();
+
                                             }
                                         })
                                         .addOnFailureListener(new OnFailureListener() {
@@ -132,52 +140,28 @@ public class SignUp extends AppCompatActivity {
                                                 Log.i("Firebase","Failed adding users to database");
                                             }
                                         });
-//                                FirebaseDatabase.getInstance().getReference("Users")
-//                                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-//                                        .setValue(s).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                                    @Override
-//                                    public void onComplete(@NonNull Task<Void> task) {
-//
-//                                    }
-//                                });
-//                                Map<String, String> map = new HashMap<>();
-//                                map.put("userID", s.getUserId());
-//                                map.put("userName",s.getUserName());
-//                                map.put("userEmail",s.getFontbonneEmail());
-//                                map.put("phoneNumber",s.getPhoneNumber());
-//                                map.put("fullName",s.getFullName());
-//                                map.put("userType","Student");
-//                                db.collection("Users")
-//                                        .add(map)
-//                                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-//                                            @Override
-//                                            public void onSuccess(DocumentReference documentReference) {
-//                                                Log.i("Firebase","Successfully adding users to database");
-//                                            }
-//                                        }).addOnFailureListener(new OnFailureListener() {
-//                                    @Override
-//                                    public void onFailure(@NonNull Exception e) {
-//                                        Log.i("Firebase","Successfully adding users to database");
-//                                    }
-//                                });
                             }
                             else{
-                                Toast.makeText(SignUp.this, "Unsuccessfully register the users", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SignUp.this, "Unsuccessfully register the users", Toast.LENGTH_LONG).show();
                                 Log.i("Firebase","Something is wrong with registering!");
                                 Intent i = new Intent(SignUp.this,LoginActivity.class);
                                 startActivity(i);
+
                             }
                         }
                     });
         }else{
+            StringBuilder stringBuilder = new StringBuilder();
+
             for(int i=0;i<errors.size();i++){
                 Toast.makeText(this, errors.get(i), Toast.LENGTH_SHORT).show();
+                stringBuilder.append(errors.get(i) + "\n");
             }
+
+            System.out.print(stringBuilder);
         }
 
     }
-    private void signUp(){
-        Toast.makeText(this, "Valid sign up", Toast.LENGTH_SHORT).show();
-    }
+
 
 }

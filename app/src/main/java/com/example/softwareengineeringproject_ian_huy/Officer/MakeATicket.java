@@ -39,6 +39,7 @@ import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -48,6 +49,7 @@ import java.util.UUID;
 public class MakeATicket extends AppCompatActivity {
     public static final String FIREBASE = "Firebase";
     ActivityResultLauncher<Intent> activityResultLauncher;
+    private boolean isPictureTaken  = false;
     private static final int PERMISSION_CODE = 1000;
     private static final int IMAGE_CAPTURE_CODE =  1001;
     Button uploadBtn;
@@ -124,6 +126,17 @@ public class MakeATicket extends AppCompatActivity {
     }
 
     private void uploadImage() {
+        ArrayList<String> errorList = new ArrayList<>();
+        if(!isPictureTaken) errorList.add("Please make sure you take a picture as evidence");
+        if(licensePlate_et.getText().toString().isEmpty() || licensePlate_et.getText().length() >8 ||licensePlate_et.getText().length() <6  ) errorList.add("Invalid License Plate");
+        if(carModel_et.getText().toString().isEmpty()) errorList.add("Invalid Car Model");
+
+        if(errorList.size() >0 ){
+            for(int i=0;i<errorList.size();i++){
+                Toast.makeText(this, errorList.get(i), Toast.LENGTH_SHORT).show();
+            }
+            return;
+        }
         if(uri_image!=null){
             String randomID = UUID.randomUUID().toString();
             String filePath = "images/" + randomID;
@@ -156,6 +169,11 @@ public class MakeATicket extends AppCompatActivity {
                                                    public void onComplete( Task<Void> task) {
                                                        if(task.isSuccessful()){
                                                            Log.i(FIREBASE,"Successfully adding tickets to database");
+                                                           Intent i = new Intent(getApplicationContext(),OfficerActivity.class);
+                                                           i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                           startActivity(i);
+
+                                                           finish();
                                                        }
                                                    }
                                                }).addOnFailureListener(new OnFailureListener() {
@@ -177,21 +195,7 @@ public class MakeATicket extends AppCompatActivity {
 
                         }
                     });
-//            Log.e("Image",uri_image.toString());
-//            ref.putFile(uri_image)
-//                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                        @Override
-//                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                            Toast.makeText(MakeATicket.this, "image uploaded", Toast.LENGTH_SHORT).show();
 
-//                        }
-//                    })
-//                    .addOnFailureListener(new OnFailureListener() {
-//                        @Override
-//                        public void onFailure(Exception e) {
-//                            Toast.makeText(MakeATicket.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
         }
         else{
             Toast.makeText(this, "No picture was uploaded", Toast.LENGTH_SHORT).show();
@@ -217,8 +221,9 @@ public class MakeATicket extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode,  Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == RESULT_OK) {
+        if (resultCode == RESULT_OK || requestCode == 0) {
             imageView.setImageURI((uri_image));
+            isPictureTaken = true;
         }
 
     }

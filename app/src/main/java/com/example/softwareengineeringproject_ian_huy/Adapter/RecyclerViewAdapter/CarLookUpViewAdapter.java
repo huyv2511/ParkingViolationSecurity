@@ -20,10 +20,10 @@ import java.util.ArrayList;
 
     public class CarLookUpViewAdapter extends FirestoreRecyclerAdapter<Car, CarLookUpViewAdapter.CarHolder > {
     private OnItemClickListener listener;
-    private ArrayList<Car> mList;
+
     public CarLookUpViewAdapter(@NonNull @NotNull FirestoreRecyclerOptions options) {
         super(options);
-        this.mList = new ArrayList<>(options.getSnapshots());
+
     }
 
     @Override
@@ -47,7 +47,7 @@ import java.util.ArrayList;
         TextView licensePlate_tv, carState_tv, carModel_tv, carColor_tv;
         public CarHolder(@NonNull @NotNull View itemView) {
             super(itemView);
-            licensePlate_tv = itemView.findViewById(R.id.tv_carModel_lookUp);
+            licensePlate_tv = itemView.findViewById(R.id.tv_licensePlate_lookUp);
             carState_tv = itemView.findViewById(R.id.tv_carState_lookUp);
             carModel_tv = itemView.findViewById(R.id.tv_carModel_lookUp);
             carColor_tv = itemView.findViewById(R.id.tv_carColor_lookUp);

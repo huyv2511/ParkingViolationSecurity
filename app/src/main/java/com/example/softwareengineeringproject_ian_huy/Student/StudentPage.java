@@ -3,6 +3,7 @@ package com.example.softwareengineeringproject_ian_huy.Student;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.softwareengineeringproject_ian_huy.Adapter.DialogAdapter.RegisterNewCarDialog;
+import com.example.softwareengineeringproject_ian_huy.LoginActivity;
 import com.example.softwareengineeringproject_ian_huy.Object.Car;
 import com.example.softwareengineeringproject_ian_huy.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -23,7 +24,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class StudentPage extends AppCompatActivity implements RegisterNewCarDialog.registerNewCarListener {
-    Button callRA_btn, SOS_btn,carRes_btn;
+    Button callRA_btn, SOS_btn,carRes_btn,signOut_btn;
     private FirebaseFirestore db;
     private static final String TAG = "StudentPage";
     @Override
@@ -34,6 +35,13 @@ public class StudentPage extends AppCompatActivity implements RegisterNewCarDial
         db = FirebaseFirestore.getInstance();
 
         callRA_btn = findViewById(R.id.callRA_btn);
+        signOut_btn = findViewById(R.id.signOut_btn);
+        signOut_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signOut();
+            }
+        });
 
 
         callRA_btn.setOnClickListener(new View.OnClickListener() {
@@ -50,6 +58,14 @@ public class StudentPage extends AppCompatActivity implements RegisterNewCarDial
                 openDialog();
             }
         });
+    }
+
+    private void signOut() {
+        FirebaseAuth.getInstance().signOut();
+        Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i);
+        finish();
     }
 
     private void openDialog() {
@@ -90,6 +106,7 @@ public class StudentPage extends AppCompatActivity implements RegisterNewCarDial
                     @Override
                     public void onComplete( Task<Void> task) {
                         Log.e(TAG, "Successfully adding the car");
+                        Toast.makeText(StudentPage.this, "", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

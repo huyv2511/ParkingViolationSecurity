@@ -1,10 +1,9 @@
 package com.example.softwareengineeringproject_ian_huy.Object;
 
 public class Student {
-    public Student(String userId, String userName, String userPassword, String userEmail, String phoneNumber, String fullName) {
+    public Student(String userId, String userName, String userEmail, String phoneNumber, String fullName) {
         this.userId = userId;
         this.userName = userName;
-        this.userPassword = userPassword;
         this.userEmail = userEmail;
         this.PhoneNumber = phoneNumber;
         this.fullName = fullName;

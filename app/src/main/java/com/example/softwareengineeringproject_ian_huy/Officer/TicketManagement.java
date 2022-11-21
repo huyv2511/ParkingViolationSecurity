@@ -44,18 +44,7 @@ public class TicketManagement extends AppCompatActivity implements IMainActivity
         setContentView(R.layout.activity_ticket_management);
         mRecyclerView = findViewById(R.id.view_recyclerView);
         storage = FirebaseStorage.getInstance();
-
-        initRecyclerView();
-        getNotes();
-    }
-    private void getTickets(){
-        FirebaseFirestore db =FirebaseFirestore.getInstance();
-
-        CollectionReference notesCollectionRef = db
-                .collection("notes");
-        Query ticketQuery = null;
-    }
-    private void initRecyclerView(){
+        db = FirebaseFirestore.getInstance();
         if(adapter == null){
             adapter = new ticketManagementAdapter(ticketList, getApplicationContext());
         }
@@ -67,7 +56,13 @@ public class TicketManagement extends AppCompatActivity implements IMainActivity
                 openDialog(position);
             }
         });
+
+
+
+        getNotes();
     }
+
+
     private void openDialog(int position) {
         Ticket t = ticketList.get(position);
         Log.e("TicketManagement",t.getTicketID());
@@ -76,8 +71,6 @@ public class TicketManagement extends AppCompatActivity implements IMainActivity
         dialog.show(getSupportFragmentManager(),"View Ticket Detail");
     }
     private void getNotes(){
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         CollectionReference notesCollectionRef = db
                 .collection("notes");

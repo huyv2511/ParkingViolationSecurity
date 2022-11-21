@@ -47,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(LoginActivity.this, SignUp.class);
                 startActivity(i);
+
             }
         });
     }
@@ -63,6 +64,8 @@ public class LoginActivity extends AppCompatActivity {
         if(userName.compareTo("admin") ==0  && password.compareTo("fontbonne") == 0){
             Intent i = new Intent(LoginActivity.this, OfficerActivity.class);
             startActivity(i);
+            finish();
+            return;
         }
 
         mAuth.signInWithEmailAndPassword(userName,password)
@@ -73,6 +76,7 @@ public class LoginActivity extends AppCompatActivity {
                             //redirect to the student activity
                             Intent i = new Intent(LoginActivity.this, StudentPage.class);
                             startActivity(i);
+                            finish();
                         }
 
                     }

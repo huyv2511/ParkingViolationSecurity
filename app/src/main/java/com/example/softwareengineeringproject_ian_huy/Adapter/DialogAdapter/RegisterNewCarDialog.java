@@ -32,8 +32,7 @@ public class RegisterNewCarDialog extends AppCompatDialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.register_new_car,null);
         builder.setView(view)
-                .setTitle("Add new exercise")
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 

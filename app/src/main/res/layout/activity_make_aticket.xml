@@ -1,81 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="10dp"
+    android:padding="3dp"
     tools:context=".Officer.MakeATicket">
-    <EditText
-        android:id="@+id/et_carLicensePlate"
-        android:hint="Enter the car license plate"
-        android:layout_width="wrap_content"
-        android:padding="10dp"
-        android:background="@drawable/edit_text_border"
-        android:layout_margin="10dp"
-        android:layout_height="wrap_content"/>
-    <EditText
-        android:id="@+id/et_carModel"
-        android:hint="Enter Car Model"
-        android:padding="10dp"
-        android:background="@drawable/edit_text_border"
-        android:layout_width="wrap_content"
-        android:layout_margin="10dp"
-        android:layout_height="wrap_content">
-    </EditText>
-    <Spinner
-        android:id="@+id/spinner_carColor"
-        android:padding="10dp"
-        android:background="@drawable/edit_text_border"
-        android:layout_width="wrap_content"
-        android:layout_margin="10dp"
-        android:entries="@array/carColor"
-        android:layout_height="wrap_content">
-    </Spinner>
-    <Spinner
-        android:id="@+id/spinner_parkingViolationType"
-        android:layout_width="wrap_content"
-        android:entries="@array/ViolationType"
-        android:padding="10dp"
-        android:layout_margin="10dp"
-        android:background="@drawable/edit_text_border"
-        android:layout_height="wrap_content">
-
-    </Spinner>
-    <Spinner
-        android:id="@+id/spinner_carState"
-        android:entries="@array/States"
-        android:layout_width="wrap_content"
-        android:padding="10dp"
-        android:layout_margin="10dp"
-        android:background="@drawable/edit_text_border"
-
-        android:layout_height="wrap_content">
-    </Spinner>
-    <ImageView
-        android:id="@+id/imageView_CarPic"
-        android:scaleType="centerCrop"
-        android:src="@drawable/fontbonne_logo"
-        android:layout_width="200dp"
-        android:layout_margin="10dp"
-        android:layout_height="200dp"/>
-
-    <ImageButton
-        android:id="@+id/capturePicture_btn"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:layout_margin="10dp"
-        android:background="@color/white"
-        android:src="@drawable/ic_camera"
-        android:text="Capture" />
-
-    <Button
-        android:id="@+id/uploadTicket_btn"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="Upload" />
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+        <EditText
+            android:id="@+id/et_carLicensePlate"
+            android:hint="Enter the car license plate"
+            android:layout_width="wrap_content"
+            android:padding="10dp"
+            android:background="@drawable/edit_text_border"
+            android:layout_margin="10dp"
+            android:layout_height="wrap_content"/>
+        <EditText
+            android:id="@+id/et_carModel"
+            android:hint="Enter Car Model"
+            android:padding="10dp"
+            android:background="@drawable/edit_text_border"
+            android:layout_width="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_height="wrap_content">
+        </EditText>
+        <Spinner
+            android:id="@+id/spinner_carColor"
+            android:padding="10dp"
+            android:background="@drawable/edit_text_border"
+            android:layout_width="wrap_content"
+            android:layout_margin="10dp"
+            android:entries="@array/carColor"
+            android:layout_height="wrap_content">
+        </Spinner>
+        <Spinner
+            android:id="@+id/spinner_parkingViolationType"
+            android:layout_width="wrap_content"
+            android:entries="@array/ViolationType"
+            android:padding="10dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/edit_text_border"
+            android:layout_height="wrap_content">
+
+        </Spinner>
+        <Spinner
+            android:id="@+id/spinner_carState"
+            android:entries="@array/States"
+            android:layout_width="wrap_content"
+            android:padding="10dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/edit_text_border"
+
+            android:layout_height="wrap_content">
+        </Spinner>
+        <ImageView
+            android:id="@+id/imageView_CarPic"
+            android:scaleType="centerCrop"
+            android:src="@drawable/fontbonne_logo"
+            android:layout_width="200dp"
+            android:layout_margin="10dp"
+            android:layout_height="200dp"/>
+
+        <ImageButton
+            android:id="@+id/capturePicture_btn"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_margin="10dp"
+            android:background="@color/white"
+            android:src="@drawable/ic_camera"
+            android:text="Capture" />
+
+        <Button
+            android:id="@+id/uploadTicket_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:text="Upload" />
+    </LinearLayout>
 
 
-</LinearLayout>
+
+
+</ScrollView>
